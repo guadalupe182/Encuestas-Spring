@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- usando platilla tyleaf -->
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+    <head>
+        <title>Polls</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/sheetslider.min.css}"> 
+        <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"> 
+        <link rel="icon" href="images/logo_transparent.png">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light 
+             bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}">
+                    <img th:src="@{images/springlogo.png}" class="imglogo" />&nbsp;Polls
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                        data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="menuNavbar"> 
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link  text-dark  " > 
+                                    <div class="row d-block">
+                                        <ul th:if="${session.usersession != null}">
+                                            <p class="float-md-start">Welcome: &nbsp;</p>
+                                            <p th:text="${session.usersession[1]}"  class="float-md-start"></p>&nbsp;
+                                            <p th:text="${session.usersession[3]}"  class="float-md-end"></p> 
+                                        </ul>
+                                    </div> 
+                                </a>
+                            </li>
+                              &nbsp;
+                              &nbsp;
+                            <li class="nav-itme">
+                                <a class="nav-link text-dark" th:href="@{/logout}">Logout</a>
+                            </li>
+                        </ul>
+                        <ul th:if="${session.usersession == null}" class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" th:href="@{/}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" th:href="@{/login}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" th:href="@{/signup}">Sign Up</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <ul th:if="${session.usersession != null}" class="navbar-nav flex-row px-5">
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" th:href="@{/main}">Home</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link text-dark" th:href="@{/createpoll}">Create Poll</a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </div>   
+        </nav>
+    </body>
+</html>

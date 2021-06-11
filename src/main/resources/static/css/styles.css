@@ -1,0 +1,40 @@
+.imglogo {
+    max-width: 100%;
+}
+
+.navbar-brand {
+    max-width: 15%;
+}
+
+.border-botom {
+    border-bottom: 3px solid #d6d5d5 !important;
+}
+
+#menuNavbar {
+    width: 60%;
+}
+
+.imgSlider {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.sheetSlider {
+    background-color: #fff;
+    text-align: center;
+}
+
+.sh__meta span, .sh__meta h4 {
+    color: rgb(85,85,85);
+}
+
+/* modifying bootstrap default value */
+.button .btn{
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .imglogo {
+        max-width: 100%;
+    }
+}

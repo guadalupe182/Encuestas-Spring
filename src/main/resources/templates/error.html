@@ -1,0 +1,16 @@
+<div th:replace="~{layout/header :: header}"></div>   <!-- calling header -->
+<div th:if="${error != null}">
+    <p th:text="${error}"></p>
+    <div th:if="${error == null}">
+        <p >Error when executing the url</p>
+    </div>
+</div>
+<div th:replace="~{layout/footer :: footer}"></div>
+
+
+
+
+
+
+
+
