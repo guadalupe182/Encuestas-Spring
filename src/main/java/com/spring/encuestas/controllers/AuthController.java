@@ -33,7 +33,7 @@ public class AuthController {
     public String signup(Model model, HttpSession session) {
         Object[] user = (Object[]) session.getAttribute("usersession");
         if (user != null) { 
-            return "main";
+            return "redirect:/main?page=0";
         } else {
             model.addAttribute("user", new User());
             return "signup";
@@ -68,7 +68,7 @@ public class AuthController {
                     user.getId()
                 };
                 session.setAttribute("usersession", data);
-                return "redirect:/main";
+                return "redirect:/main?page=0";
             } else {
                 result.rejectValue("email", "error.user", "An account already exists for this email");
                 model.addAttribute("user", user);
@@ -116,7 +116,7 @@ public class AuthController {
                     };
                     //almacenando datos en usuario de sesion
                     session.setAttribute("usersession", data);
-                    return "redirect:/main";
+                    return "redirect:/main?page=0";
                 } else {
                     result.rejectValue("password", "error.user", "Wrong password");
                     model.addAttribute("login", login);

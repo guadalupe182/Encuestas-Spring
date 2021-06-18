@@ -1,5 +1,38 @@
 <div th:replace="~{layout/header :: header}"></div>   <!-- calling header -->
-
-
-<div th:replace="~{layout/footer :: footer}"></div>
-
+<div container="p-5">
+    <div class="row  m-md-5" th:each="poll : ${listPolls[2]}">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3 th:text="${poll.poll}"></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p th:text="${poll.response}"></p>         
+                        </div>   
+                        <div class="col">
+                            <p>Responses</p>        
+                        </div>
+                    </div>
+                    <a class="btn btn-info" th:href="@{/details?id=} + ${poll.id}">
+                        Details
+                    </a>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    <a class="btn btn-danger" href="/links/delete/">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <article th:utext="${listPolls[0]}"></article>
+        <br />
+        <article th:utext="${listPolls[1]}"></article>
+    </div>
+    <div th:replace="~{layout/footer :: footer}"></div>

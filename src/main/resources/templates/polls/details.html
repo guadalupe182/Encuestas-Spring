@@ -1,0 +1,103 @@
+<div th:replace="~{layout/header :: header}"></div>   <!-- calling header -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card" style="width: 21rem;">
+                <div class="card-header">
+                    <h3 th:text="${poll.poll}"></h3>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col">
+                                <p th:text="${poll.response}"></p>
+                            </div>
+                            <div class="col">
+                                <p>Responses</p> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p th:text="${votes}"></p> 
+                            </div>
+                            <div class="col">
+                                <p>Votes</p>         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body" id="top_x_div">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Scripts-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    google.charts.load('current', {'packages': ['bar']});
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff() {
+        let response = "[[ ${ response } ]]";
+        let data = response.replace('[', ''); //eliminando corchete de apertura
+        let data1 = response.replace(']', ''); //eliminando corchete de cierre
+        let array = data1.split(",");
+
+        let resultadoArray = new Array();
+        resultadoArray[0] = 'Respuesta';
+        resultadoArray[1] = 'Voto';
+
+        let resultadoArray1 = new Array();
+        resultadoArray1[0] = resultadoArray;
+
+        let count = 0;
+        let j = 1;
+
+        resultadoArray = new Array();//refresh array
+
+        for (let i = 0; i < array.length; i++) {
+
+            if (count === 1) {
+                resultadoArray[count] = parseInt(array[i], 10);
+                resultadoArray1[j] = resultadoArray;
+                count = 0;
+                j++;
+                resultadoArray = new Array(); //refresh array
+            } else {
+                resultadoArray[count] = array[i];
+                count++;
+            }
+        }
+
+        let datas = new google.visualization.arrayToDataTable(resultadoArray1);
+
+        let options = {
+            width: 0,
+            legend: {position: 'none'},
+            chart: {
+                title: "[[${poll.poll}]]",
+                subtitle: 'System Poll'
+            },
+            axes: {
+                x: {
+                    0: {side: 'top', label: 'white to move'} //top x-axis
+                }
+            },
+            bar: {groupWidth: "90%"}
+        };
+
+        let chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        chart.draw(datas, google.charts.Bar.convertOptions(options));
+
+        console.log(resultadoArray1);
+    }
+</script>
+<div th:replace="~{layout/footer :: footer}"></div>
