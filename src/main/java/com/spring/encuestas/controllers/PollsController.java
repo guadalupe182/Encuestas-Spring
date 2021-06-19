@@ -132,4 +132,25 @@ public class PollsController {
             return "signup";
         }
     }
+
+    @PostMapping(value = {"/votes"})
+    public String insertVotes(Model model, HttpSession session, String response) {
+        Object[] user = (Object[]) session.getAttribute("usersession");
+        if (user != null) {
+            if (response != null) {
+                long id = Long.valueOf(response);
+                Response res = _responseRepository.findById(id).get();
+                Integer vote = res.getVotes();
+                vote++;
+                res.setVotes(vote);
+                _responseRepository.save(res);
+                return "redirect:/details?id=" + _id;
+            } else {
+                value = true;
+            }
+            return "redirect:/votes?id=" + _id;
+        } else {
+            return "signup";
+        }
+    }
 }
