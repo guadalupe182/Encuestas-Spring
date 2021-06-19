@@ -42,6 +42,9 @@ public class PollsController {
         }
     }
 
+    /**
+     * Contoller para vista login
+     */
     @PostMapping(value = {"/registerpoll"})
     public String registerPoll(String[] response, String poll, HttpSession session) {
         Object[] user = (Object[]) session.getAttribute("usersession");
@@ -67,6 +70,7 @@ public class PollsController {
     }
 
     /**
+     * Controller para vista details
      *
      * @param misession realiza una peticion http
      * @param model devuleve el model del objecto
@@ -95,4 +99,37 @@ public class PollsController {
         return "polls/details";
     }
 
+    /**
+     * Controller para vista votes
+     *
+     * @param misession realiza una peticion http
+     * @param model devuleve el model del objecto
+     * @param id devuelve registro por id de usuario
+     * @param _id variable de clase de tipo log
+     * @param value variable de clase de tipo boolean
+     * @return retorna a la vista votes si no entra al if retorna a singup
+     */
+    private static long _id;
+    private static boolean value = false;
+
+    @GetMapping(value = {"/votes"})
+    public String votes(Model model, HttpSession session, long id) {
+        Object[] user = (Object[]) session.getAttribute("usersession");
+        if (user != null) {
+            _id = id;
+            Polls poll = _pollRepository.findById(id).get();
+            List<Response> response = _responseRepository.findAll()
+                    .stream().filter(p -> p.getPolls_id() == id)
+                    .collect(Collectors.toList());
+            model.addAttribute("poll", poll);
+            model.addAttribute("response", response);
+            if (value) {
+                model.addAttribute("message", "Seleccione una respuesta");
+            }
+            value = false;
+            return "polls/votes";
+        } else {
+            return "signup";
+        }
+    }
 }
