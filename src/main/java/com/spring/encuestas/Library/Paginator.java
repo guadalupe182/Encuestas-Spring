@@ -20,12 +20,12 @@ public class Paginator<T> {
     private final int pagi_nav_num_enlaces = 5;
     private int pagi_actual;
     //definimos qué irá en el enlace a la página anterior 
-    private final String pagi_nav_anterior = " &laquo; Anterior ";
+    private final String pagi_nav_anterior = " &laquo; Previous ";
     //definimos qué irá en el enlace a la página siguiente 
-    private final String pagi_nav_siguiente = " Siguiente &raquo; ";
+    private final String pagi_nav_siguiente = " Next &raquo; ";
     //definimos qué irá en el enlace a la página siguiente 
-    private final String pagi_nav_primera = " &laquo; Primero ";
-    private final String pagi_nav_ultima = " Último &raquo; ";
+    private final String pagi_nav_primera = " &laquo; First ";
+    private final String pagi_nav_ultima = " Last &raquo; ";
     private String pagi_navegacion = "";
 
     public Object[] paginator(List<T> table, int pagina, int registros,
@@ -108,7 +108,7 @@ public class Paginator<T> {
          // Consulta SQL. Devuelve cantidad registros empezando desde pagi_inicial
         List<T> query = table.stream().skip(pagi_inicial).limit(pagi_cuantos)
                 .collect(Collectors.toList());
-         String pagi_info = "Resultados de <b>" + pagi_actual + "</b> al <b>" + pagi_totalPags + "</b> de <b>"
+         String pagi_info = "Results of  <b>" + pagi_actual + "</b> to <b>" + pagi_totalPags + "</b> de <b>"
                 + pagi_totalReg + "</b> <b>/" + pagi_cuantos + "</b>";
         Object[] data = {pagi_info, pagi_navegacion, query};
         return data;

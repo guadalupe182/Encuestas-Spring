@@ -25,16 +25,43 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <a class="btn btn-danger" href="/links/delete/">
-                        Delete
-                    </a>
+                    <script type="text/javascript">
+                        let poll = "[[${poll.poll}]]";
+                        let idPoll = "[[${poll.id}]]";
+                    </script>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" 
+                            onclick="deletePoll(idPoll, poll)">Delete</button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="text-center">
-        <article th:utext="${listPolls[0]}"></article>
-        <br />
-        <article th:utext="${listPolls[1]}"></article>
-    </div>
-    <div th:replace="~{layout/footer :: footer}"></div>
+        <div class="text-center">
+            <article th:utext="${listPolls[0]}"></article>
+            <br />
+            <article th:utext="${listPolls[1]}"></article>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete the survey?</h5>
+                        <button type="buton" class="close" data-dissmiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 id="titlePoll"></h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a id="idPoll" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function deletePoll(id, poll) {
+                document.getElementById("titlePoll").innerHTML = poll;
+                document.getElementById("idPoll").setAttribute('href', '/delete?id=' + id);
+            }
+        </script>
+        <div th:replace="~{layout/footer :: footer}"></div>

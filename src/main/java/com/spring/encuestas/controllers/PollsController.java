@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,7 +103,7 @@ public class PollsController {
     /**
      * Controller para vista votes
      *
-     * @param misession realiza una peticion http
+     * @param session realiza una peticion http
      * @param model devuleve el model del objecto
      * @param id devuelve registro por id de usuario
      * @param _id variable de clase de tipo log
@@ -132,7 +133,15 @@ public class PollsController {
             return "signup";
         }
     }
-
+    
+    
+    /**
+     * Controller para vista  realizar votos 
+     * @param session realiza una peticion http
+     * @param model devuleve el model del objecto
+     * @param response recibe un tipo de dato String
+     * @return vista votes o vista sugnup en caso de no entrar
+     */
     @PostMapping(value = {"/votes"})
     public String insertVotes(Model model, HttpSession session, String response) {
         Object[] user = (Object[]) session.getAttribute("usersession");
@@ -152,5 +161,22 @@ public class PollsController {
         } else {
             return "signup";
         }
+    }
+    
+    @GetMapping(value = {"/delete"})
+    @Transactional
+    public String delete(Model model, HttpSession session, long id){
+         Object[] user = (Object[]) session.getAttribute("usersession");
+        if (user != null){
+             List<Response> response = _responseRepository.findAll()
+                    .stream().filter(p -> p.getPolls_id() == id)
+                    .collect(Collectors.toList());
+             response.forEach(item -> {
+                _responseRepository.delete(item);
+            });
+              Polls poll = _pollRepository.findById(id).get();
+            _pollRepository.delete(poll);
+        }
+         return "redirect:/main?page=0&filtrar=";
     }
 }
