@@ -1,154 +1,50 @@
 <div th:replace="~{layout/header :: header}"></div>   <!-- calling header -->
-<div class="sheetSlider sh--default">
-    <input id="s1" type="radio" name="slide1" checked /> <!-- checking button--> 
-    <input id="s2" type="radio" name="slide1" />
-    <input id="s3" type="radio" name="slide1" />
-    <input id="s4" type="radio" name="slide1" />
-    <input id="s5" type="radio" name="slide1" />
-    <input id="s6" type="radio" name="slide1" />
-    <input id="s7" type="radio" name="slide1" />
-    <input id="s8" type="radio" name="slide1" />
-    <input id="s9" type="radio" name="slide1" />
-    <input id="s10" type="radio" name="slide1" />
-   
-    <div class="sh__content">
-        <!-- Slider Item -->
-        <div class="sh__item">
-            <img src="/images/slider/Spring.png" alt="imgText" class="imgSlider"/>
-            <div class="sh__meta">
-                <h4>
-                    Spring 
-                </h4>
-                <span>
-                    <a th:href="@{https://spring.io/}" target="_blanck">Spring Web</a>
-                </span>
+<div th:replace="~{index/slider :: slider}"></div>    <!-- calling slider-->
+<hr>
+<br>
+<div container="p-5 ">
+    <form class="text-center " action="/index" method="get">    <!--previw polls in home-->
+        <div class="row " style="margin-left: 50px"  >
+            <div class="col-md-2 " >
+                <input type="hidden" name="page" value='0'/>
+                <input type="text" id="filtrar" name="filtrar" placeholder="Buscar" class="form-select " />
+            </div>
+            <div class="col-md-1" >
+                <div class="row"> 
+                    <input type="submit" value="Buscar" class="btn btn-success buscar"/>
+                </div>
             </div>
         </div>
-        <div class="sh__item">
-            <img src="/images/slider/ASP-NET-Core.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    ASP-NET-Core
-                </h4>
-                <span>
-                    <a th:href="@{https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-5.0}" target="_blanck">ASP-NET-Core</a>
-                </span>
+    </form>
+</div>  
+    <br>
+    <div class="row  m-md-5" th:each="poll : ${listPolls[2]}">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3 th:text="${poll.poll}"></h3>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col">
+                                <p th:text="${poll.response}"></p>         
+                            </div>
+                            <div class="col" >
+                                <p>Responses</p>        
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-info" th:href="@{/details?id=} + ${poll.id}">
+                        Details
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="sh__item">
-            <img src="/images/slider/Android.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    Android
-                </h4>
-                <span>
-                    <a th:href="@{https://www.android.com/intl/es-419_mx/}" target="_blanck">Android</a>
-                </span>
-            </div>
+        <div class="text-center">
+            <article th:utext="${listPolls[0]}"></article>
+            <br />
+            <article th:utext="${listPolls[1]}"></article>
         </div>
-        <div class="sh__item">
-            <img src="/images/slider/csharp.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    C#
-                </h4>
-                <span>
-                    <a th:href="@{https://docs.microsoft.com/en-us/dotnet/csharp/}" target="_blanck">C#</a>
-                </span>
-            </div>
-        </div>
-        <div class="sh__item">
-            <img src="/images/slider/Dart-and-Flutter.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    Dart & Flutter
-                </h4>
-                <span>
-                    <a th:href="@{https://esflutter.dev/docs/resources/bootstrap-into-dart}" target="_blanck">Flutter</a>
-                </span>
-            </div>
-        </div>
-        <div class="sh__item">
-            <img src="/images/slider/Kotlin.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    Kotlin
-                </h4>
-                <span>
-                    <a th:href="@{https://kotlinlang.org/}" target="_blanck" >Kotlin</a>
-                </span>
-            </div>
-        </div>
-        <div class="sh__item">
-            <img src="/images/slider/pyt.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    Phyton
-                </h4>
-                <span>
-                    <a th:href="@{https://www.python.org/}" target="_blanck">Phyton</a>
-                </span>
-            </div>
-        </div>
-        <div class="sh__item">
-            <img src="/images/slider/java.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    Java
-                </h4>
-                <span>
-                    <a th:href="@{https://www.java.com/es/}" target="_blanck">Java</a>
-                </span>
-            </div>
-        </div>
-        <div class="sh__item">
-            <img src="/images/slider/C.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    C
-                </h4>
-                <span>
-                    <a th:href="@{https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)#:~:text=Se%20trata%20de%20un%20lenguaje,un%20control%20a%20bajo%20nivel.}" target="_blanck">C</a>
-                </span>
-            </div>
-        </div>
-        <div class="sh__item">
-            <img src="/images/slider/UWP.png" alt="imgText" class="imgSlider" />
-            <div class="sh__meta">
-                <h4>
-                    UWP
-                </h4>
-                <span>
-                    <a th:href="@{https://docs.microsoft.com/en-us/windows/uwp/}" target="_blanck">UWP</a>
-                </span>
-            </div>
-        </div>
-    </div>
-    <!-- buttons -->
-    <div class="sh__btns">
-        <label for="s1"></label> 
-        <label for="s2"></label> 
-        <label for="s3"></label> 
-        <label for="s4"></label> 
-        <label for="s5"></label> 
-        <label for="s6"></label> 
-        <label for="s7"></label> 
-        <label for="s8"></label> 
-        <label for="s9"></label> 
-        <label for="s10"></label> 
-    </div>
-    <!-- Arrows -->
-    <div class="sh__arrows">
-        <label for="s1"></label> 
-        <label for="s2"></label> 
-        <label for="s3"></label> 
-        <label for="s4"></label> 
-        <label for="s5"></label> 
-        <label for="s6"></label> 
-        <label for="s7"></label> 
-        <label for="s8"></label> 
-        <label for="s9"></label> 
-        <label for="s10"></label> 
-    </div>
-</div>
+    </div>    
 <div th:replace="~{layout/footer :: footer}"></div>

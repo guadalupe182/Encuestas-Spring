@@ -1,0 +1,29 @@
+{
+    "elements": {},
+    "attributes": {
+        "container": {},
+        "acction": {
+            "context": "form"
+        },
+        "th:text": {
+            "context": "h3"
+        },
+        "th:if": {},
+        "th:id": {},
+        "th:unless": {},
+        "th:replace": {
+            "context": "div"
+        },
+        "th:href": {},
+        "th:fragment": {
+            "context": "div"
+        },
+        "th:each": {
+            "context": "div"
+        },
+        "th:utext": {},
+        "method:": {
+            "context": "form"
+        }
+    }
+}

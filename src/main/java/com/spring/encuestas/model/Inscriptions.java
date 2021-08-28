@@ -21,51 +21,60 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * @author adrian
  */
 @Entity
-@Table(name = "polls")
+@Table(name = "inscriptions")
 @EntityListeners(AuditingEntityListener.class)
-public class Polls implements Serializable {
-
+public class Inscriptions implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String poll;
-    private Integer response;
+    private Long id_in;
+    private Long poll_id;
+    private Long response_id;
+    private String response;
     private Long user_id;
     @CreatedDate
     private Date date;
 
-    public Polls() {
+    public Inscriptions() {
     }
 
-    public Polls(Long id, String poll, Integer response, Long user_id, Date date) {
-        this.id = id;
-        this.poll = poll;
+    public Inscriptions(Long id_in, Long poll_id, Long response_id, String response, Long user_id, Date date) {
+        this.id_in = id_in;
+        this.poll_id = poll_id;
+        this.response_id = response_id;
         this.response = response;
         this.user_id = user_id;
         this.date = date;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_in() {
+        return id_in;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_in(Long id_in) {
+        this.id_in = id_in;
     }
 
-    public String getPoll() {
-        return poll;
+    public Long getPoll_id() {
+        return poll_id;
     }
 
-    public void setPoll(String poll) {
-        this.poll = poll;
+    public void setPoll_id(Long poll_id) {
+        this.poll_id = poll_id;
     }
 
-    public Integer getResponse() {
+    public Long getResponse_id() {
+        return response_id;
+    }
+
+    public void setResponse_id(Long response_id) {
+        this.response_id = response_id;
+    }
+
+    public String getResponse() {
         return response;
     }
 
-    public void setResponse(Integer response) {
+    public void setResponse(String response) {
         this.response = response;
     }
 
@@ -84,9 +93,6 @@ public class Polls implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public Integer getResponses() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
+    
 }

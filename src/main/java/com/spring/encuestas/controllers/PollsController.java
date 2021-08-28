@@ -5,8 +5,10 @@
  */
 package com.spring.encuestas.controllers;
 
+import com.spring.encuestas.model.Inscriptions;
 import com.spring.encuestas.model.Polls;
 import com.spring.encuestas.model.Response;
+import com.spring.encuestas.repository.InscriptionsRepository;
 import com.spring.encuestas.repository.PollRepository;
 import com.spring.encuestas.repository.ResponseRepository;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class PollsController {
     public PollRepository _pollRepository;
     @Autowired
     public ResponseRepository _responseRepository;
+    @Autowired
+    public InscriptionsRepository _inscriptionsRepository;
 
     @GetMapping(value = {"/createpoll"})
     public String createPoll(Model model, HttpSession session) {
@@ -118,10 +122,20 @@ public class PollsController {
         Object[] user = (Object[]) session.getAttribute("usersession");
         if (user != null) {
             _id = id;
+            long id_user = (long) user[5];
+            boolean action = true;
             Polls poll = _pollRepository.findById(id).get();
+            //consultas
             List<Response> response = _responseRepository.findAll()
                     .stream().filter(p -> p.getPolls_id() == id)
                     .collect(Collectors.toList());
+            List<Inscriptions> inscription = _inscriptionsRepository.findAll()
+                    .stream().filter(p -> p.getPoll_id() == id && p.getUser_id() == id_user) //filtrando registros
+                    .collect(Collectors.toList());
+            if (!inscription.isEmpty()) {
+                action = false;
+            }
+            model.addAttribute("action", action);
             model.addAttribute("poll", poll);
             model.addAttribute("response", response);
             if (value) {
@@ -130,13 +144,13 @@ public class PollsController {
             value = false;
             return "polls/votes";
         } else {
-            return "signup";
+            return "redirect:/login";
         }
     }
-    
-    
+
     /**
-     * Controller para vista  realizar votos 
+     * Controller para vista realizar votos
+     *
      * @param session realiza una peticion http
      * @param model devuleve el model del objecto
      * @param response recibe un tipo de dato String
@@ -153,6 +167,17 @@ public class PollsController {
                 vote++;
                 res.setVotes(vote);
                 _responseRepository.save(res);
+                //insertando nuevos votos 
+                Long id_user = (long) user[5];
+                Date actualDate = new Date();
+                Inscriptions inscription = new Inscriptions();
+                inscription.setId_in(0L);
+                inscription.setPoll_id(_id);
+                inscription.setUser_id(id_user);
+                inscription.setResponse(res.getResponse());
+                inscription.setResponse_id(_id);
+                inscription.setDate(actualDate);
+                _inscriptionsRepository.save(inscription);
                 return "redirect:/details?id=" + _id;
             } else {
                 value = true;
@@ -162,21 +187,22 @@ public class PollsController {
             return "signup";
         }
     }
-    
+
     @GetMapping(value = {"/delete"})
     @Transactional
-    public String delete(Model model, HttpSession session, long id){
-         Object[] user = (Object[]) session.getAttribute("usersession");
-        if (user != null){
-             List<Response> response = _responseRepository.findAll()
+    public String delete(Model model, HttpSession session, long id) {
+        Object[] user = (Object[]) session.getAttribute("usersession");
+        if (user != null) {
+            List<Response> response = _responseRepository.findAll()
                     .stream().filter(p -> p.getPolls_id() == id)
                     .collect(Collectors.toList());
-             response.forEach(item -> {
+            response.forEach(item -> {
                 _responseRepository.delete(item);
             });
-              Polls poll = _pollRepository.findById(id).get();
+            Polls poll = _pollRepository.findById(id).get();
             _pollRepository.delete(poll);
         }
-         return "redirect:/main?page=0&filtrar=";
+        return "redirect:/main?page=0&filtrar=";
     }
+
 }
