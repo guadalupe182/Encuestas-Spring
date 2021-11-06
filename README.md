@@ -1,7 +1,8 @@
-# Surveys-Spring
-Update in Spring.
-A web application that allows to make surveys of any kind using Sprinboot.
-Contains: Signup, Login, Logout, Poll Creation, Edit, Delete.
+# Surveys-Spring<br>
+Update in Spring.<br>
+A web application that allows to make surveys of any kind using Sprinboot.<br>
+Contains: <br>
+Signup, Login, Logout, Poll Creation, Edit, Delete.
 
 ## Get Started!
 Step 1: Install netbeans or any other IDE of your choice you can do it from their website: [netbeans](https://netbeans.apache.org/download/nb125/nb125.html) <br>
